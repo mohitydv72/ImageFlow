@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <!-- logo-->
+        <img
+          src="https://th.bing.com/th/id/OIG3.CS2JXTXmLSK2BES7P3dG?w=1024&h=1024&rs=1&pid=ImgDetMain"
+          alt="pin logo"
+          class="img1"
+        />
+        <p class="header">Login Your account to see more</p>
+
+        <% if (error.length > 0) { %>
+        <p
+          style="
+            margin: 10px 0;
+            color: red;
+            font-size: larger;
+            font-weight: 500;
+            text-transform: capitalize;
+          "
+        >
+          <%= error %>
+        </p>
+        <% } %>
+
+        <form action="/login" method="post">
+          <input
+            type="text"
+            name="username"
+            placeholder="UserName"
+            class="detail"
+          /><br />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            class="detail"
+          />
+          <input type="submit" class="btn int" value="Login account" />
+        </form>
+
+        <a href="/forget">Forgot your password?</a>
+
+        <footer>
+          <p>
+            By continuing, you agree to ImageFlow's
+            <b>Terms of Service, Privacy policy.</b>
+          </p>
+          <hr />
+          <p style="font-size: larger">
+            Not on ImageFlow Yet ? <a href="/">Register</a>
+          </p>
+        </footer>
+      </div>
+    </div>
+    <!-- <a class="upbtn">Sign up</a> -->
+  </body>
+</html>

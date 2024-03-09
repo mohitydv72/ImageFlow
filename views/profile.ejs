@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+   
+    <link rel="stylesheet" href="/stylesheets/feed.css">
+   <style>
+    .container{
+      width: 80%;
+    }
+   </style>
+</head>
+<body>
+
+  <div class="nav">
+    <div class="nav-header">
+      <div class="nav-title"><a href="/feed">ImageFlow</a></div>
+    </div>
+
+    <div class="nav-links">
+      <a href="/profile">Profile</a>
+      <a href="/feed">Feed</a>
+      <a href="/logout"><div class="logoutBtn">Logout</div></a>
+    </div>
+  </div>
+
+
+ 
+    
+
+    <div class="containerZ">
+        <div class="cardZ">
+          <div class="profile-picture">
+            <img src="/images/uploads/<%= user.dp %>" alt="Profile Picture">
+          </div>
+          <h2 class="name"><%= user.fullName  %></h2>
+          <h3 class="username">@<%= user.username %></h3>
+          <p class="tagline">Hii <%= user.fullName  %> Welcome to our website</p>
+          <p class="description">Jai Shree Ram || Har Har Mahadev</p>
+          <button id="editprof" class="button btn">Edit Profile</button>
+          <a href="/logout" class="button">Logout</a>
+          <button id="uploadBtn" class="button btn">Upload Posts</button>
+          
+          <form action="/upload" method="post"  enctype="multipart/form-data" class="upload_form">
+            <div class="upper">
+              <input type="text" name="filecaption" placeholder="Caption here">
+            <input type="file" name="file" >
+            <button type="submit">Upload your post</button>
+            </div>
+            <div class="bottom">
+              <button type="button" id="cancelBtn">Cancel</button>
+            </div>
+          </form>
+          <form action="/profileupload" method="post"  enctype="multipart/form-data" class="profile_form" id="uploadImg">
+            <input type="file" name="image" >
+          </form>
+        </div>
+    </div>
+
+
+    <div class="container">
+
+      <% user.posts.forEach(function(post){ %>
+        <div class="box">
+          <a
+            href="#"
+          >
+            <img
+              src="/images/uploads/<%= post.image %>"
+              alt="image"
+          /></a>
+          <div class="caption"><%= post.postText %></div>
+         
+        </div>
+      <%  }) %>
+  
+  
+    </div>
+
+    
+    <script>
+      document.getElementById('uploadBtn').addEventListener('click', function(){
+        document.querySelector('.upload_form').style.display = 'block';
+      });
+    
+      document.getElementById('cancelBtn').addEventListener('click', function(){
+        document.querySelector('.upload_form').style.display = 'none';
+      });
+
+      document.getElementById('editprof').addEventListener('click', function(){
+        document.querySelector('#uploadImg input ').click();
+      });
+      
+      document.querySelector('#uploadImg input ').addEventListener('change', function(){
+        document.querySelector('#uploadImg').submit();
+      });
+    </script>
+
+   
+</body>
+</html>

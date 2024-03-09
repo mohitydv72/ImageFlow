@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/feed.css" />
+  </head>
+  <body>
+    <div class="nav">
+      <div class="nav-header">
+        <div class="nav-title"><a href="/feed">ImageFlow</a></div>
+      </div>
+
+      <div class="nav-links">
+        <a href="/profile">Profile</a>
+        <a href="/feed">Feed</a>
+        <a href="/logout"><div class="logoutBtn">Logout</div></a>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <% posts.forEach(function(post){ %>
+        <div class="box">
+          <a
+            href="#"
+          >
+            <img
+              src="/images/uploads/<%= post.image %>"
+              alt="image"
+          /></a>
+          <div class="caption"><%= post.postText %></div>
+          <div class="caption  capunm">@<%= post.user.username %></div>
+        </div>
+      <%  }) %>
+
+
+    </div>
+    <!-- <script>
+      const navSlide = () => {
+        const lines = document.querySelector(".lines");
+        const nav = document.querySelector(".navLink");
+
+        lines.addEventListener("click", () => {
+          nav.classList.toggle("nav-active");
+
+          //Line Animation
+          lines.classList.toggle("toggle");
+        });
+      };
+
+      navSlide();
+    </script> -->
+
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="app.js"></script> -->
+  </body>
+</html>

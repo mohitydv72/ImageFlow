@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // mongoose.connect('mongodb://localhost:27017/instagram') ;
 mongoose.connect(process.env.MONGOURL).then(()=>{
-  console.log('Connected to DB');
+  // console.log('Connected to DB');
 }
 ).catch((err)=>{
   console.log('Error' , err);

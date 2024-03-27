@@ -58,7 +58,7 @@ router.get('/feed', isLoggedIn  , async function(req, res, next) {
     username : req.session.passport.user
   })
   let posts = await postModel.find().populate('user');
-  console.log(posts);
+  // console.log(posts);
   res.render('feed' , {  user , posts});
 
 });
@@ -68,7 +68,7 @@ router.get('/profile', isLoggedIn  , async function(req, res, next) {
   let user = await userModel.findOne({
     username : req.session.passport.user
   }).populate('posts');
-  console.log(user);
+  // console.log(user);
    res.render('profile' , {user});
 });
 

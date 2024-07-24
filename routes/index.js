@@ -13,8 +13,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/upload', isLoggedIn, upload.single('file'), async (req, res) => {
+  try {
   if (!req.file) {
-    return res.status(400).send("No file uploaded");
+    res.render('profile');
   }
 
   const base64Image = req.file.buffer.toString('base64');
@@ -34,6 +35,13 @@ router.post('/upload', isLoggedIn, upload.single('file'), async (req, res) => {
   user.posts.push(postData._id);
   await user.save();
   res.redirect("/profile");
+} catch (error) {
+  // Log the error for debugging
+  console.error('Error uploading file:', error);
+
+  // Render the profile page with an error message
+  res.render('profile', { error: 'An error occurred while uploading the file. Please try again.' });
+}
 });
 
 // router.post('/upload', isLoggedIn, upload.single('file') , async (req,res) =>{
@@ -69,22 +77,30 @@ router.post('/upload', isLoggedIn, upload.single('file'), async (req, res) => {
 
 // });
 router.post('/profileupload', isLoggedIn, upload.single('image'), async (req, res) => {
-  // if (!req.file) {
-  //   return res.status(400).send("No image uploaded");
-  // }
+  try {
+    if (!req.file) {
+      res.render('profile');
+      // console.log(flash.error);
+    }
 
-  const base64Image = req.file.buffer.toString('base64');
-  const mimeType = req.file.mimetype;
+    const base64Image = req.file.buffer.toString('base64');
+    const mimeType = req.file.mimetype;
 
-  let user = await userModel.findOne({
-    username: req.session.passport.user
-  });
+    let user = await userModel.findOne({
+      username: req.session.passport.user
+    });
 
-  user.dp = base64Image;
-  user.dpMimeType = mimeType; // Save MIME type in the database
+    user.dp = base64Image;
+    user.dpMimeType = mimeType; // Save MIME type in the database
 
-  await user.save();
-  res.redirect("/profile");
+    await user.save();
+    res.redirect("/profile");
+  } catch (error) {
+    if (error.code === 'LIMIT_FILE_SIZE') {
+      res.render('profile');
+    }
+    res.render('profile', { error : req.flash('error')});
+  }
 });
 
 router.get('/login', function(req, res, next) {

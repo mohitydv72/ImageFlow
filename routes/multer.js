@@ -13,5 +13,8 @@ const multer= require('multer');
 // });
 const storage = multer.memoryStorage();
 
-const upload = multer({ storage: storage });
+const upload = multer({
+    limits: { fileSize: 10 * 1024 * 1024 }, // 5 MB limit
+    storage: multer.memoryStorage(), // Store file in memory
+  });
 module.exports = upload;

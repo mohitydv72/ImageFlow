@@ -12,37 +12,79 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/upload', isLoggedIn, upload.single('file') , async (req,res) =>{
-  if(!req.file){
+router.post('/upload', isLoggedIn, upload.single('file'), async (req, res) => {
+  if (!req.file) {
     return res.status(400).send("No file uploaded");
   }
+
+  const base64Image = req.file.buffer.toString('base64');
+  const mimeType = req.file.mimetype;
+
   let user = await userModel.findOne({
-    username : req.session.passport.user
-  })
-  const postData = await  postModel.create({
-    postText : req.body.filecaption,
-    image : req.file.filename,
-    user : user._id
+    username: req.session.passport.user
   });
 
-   user.posts.push(postData._id);
+  const postData = await postModel.create({
+    postText: req.body.filecaption,
+    image: base64Image,
+    imageMimeType: mimeType,
+    user: user._id
+  });
+
+  user.posts.push(postData._id);
   await user.save();
   res.redirect("/profile");
-
 });
 
-router.post('/profileupload', isLoggedIn, upload.single('image') , async (req,res) =>{
-  // if(!req.image){
+// router.post('/upload', isLoggedIn, upload.single('file') , async (req,res) =>{
+//   if(!req.file){
+//     return res.status(400).send("No file uploaded");
+//   }
+//   let user = await userModel.findOne({
+//     username : req.session.passport.user
+//   })
+//   const postData = await  postModel.create({
+//     postText : req.body.filecaption,
+//     image : req.file.filename,
+//     user : user._id
+//   });
+
+//    user.posts.push(postData._id);
+//   await user.save();
+//   res.redirect("/profile");
+
+// });
+
+// router.post('/profileupload', isLoggedIn, upload.single('image') , async (req,res) =>{
+//   // if(!req.image){
+//   //   return res.status(400).send("No image uploaded");
+//   // }
+//   let user = await userModel.findOne({
+//     username : req.session.passport.user
+//   })
+//   user.dp = req.file.filename;
+  
+//   await user.save();
+//   res.redirect("/profile");
+
+// });
+router.post('/profileupload', isLoggedIn, upload.single('image'), async (req, res) => {
+  // if (!req.file) {
   //   return res.status(400).send("No image uploaded");
   // }
+
+  const base64Image = req.file.buffer.toString('base64');
+  const mimeType = req.file.mimetype;
+
   let user = await userModel.findOne({
-    username : req.session.passport.user
-  })
-  user.dp = req.file.filename;
-  
+    username: req.session.passport.user
+  });
+
+  user.dp = base64Image;
+  user.dpMimeType = mimeType; // Save MIME type in the database
+
   await user.save();
   res.redirect("/profile");
-
 });
 
 router.get('/login', function(req, res, next) {

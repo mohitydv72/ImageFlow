@@ -41,7 +41,8 @@
     <div class="containerZ">
         <div class="cardZ">
           <div class="profile-picture">
-            <img src="/images/uploads/<%= user.dp %>" alt="Profile Picture">
+            <!-- <img src="/images/uploads/<%= user.dp %>" alt="Profile Picture"> -->
+            <img src="data:<%= user.dpMimeType %>;base64,<%= user.dp %>" alt="Profile Picture">
           </div>
           <h2 class="name"><%= user.fullName  %></h2>
           <h3 class="username">@<%= user.username %></h3>
@@ -76,7 +77,7 @@
             href="#"
           >
             <img
-              src="/images/uploads/<%= post.image %>"
+               src="data:<%= post.imageMimeType %>;base64,<%= post.image %>"
               alt="image"
           /></a>
           <div class="caption"><%= post.postText %></div>

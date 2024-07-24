@@ -37,7 +37,7 @@
             href="#"
           >
             <img
-              src="/images/uploads/<%= post.image %>"
+               src="data:<%= post.imageMimeType %>;base64,<%= post.image %>"
               alt="image"
           /></a>
           <div class="caption"><%= post.postText %></div>

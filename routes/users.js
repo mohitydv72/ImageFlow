@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
       ref: 'Post'
     }],
   dp: String, // Profile picture
+  dpMimeType: String, // MIME type of the profile picture
   email: {
     type: String,
     required: true,
